@@ -28,11 +28,12 @@ public class ItemRequestController {
     }
 
     @GetMapping("/all")
-    public List<ItemRequestDtoForGetList> getAllItemRequestsByUserId(int OtherRequestorId) { // получение всех запросов на вещи другого пользователя по его id
-        return itemRequestService.getAll(OtherRequestorId);
+    public List<ItemRequestDtoForGetList> getAllItemRequestsByUserId(int otherRequestorId) { // получение всех запросов на вещи другого пользователя по его id
+        return itemRequestService.getAll(otherRequestorId);
     }
+
     @GetMapping("/{requestId}")
-    public ItemRequestDtoForGetList getItemRequestByRequestId(int requestId){ // любой пользователь может получить itemRequest по id
-        return itemRequestService.ItemRequestDtoForGetListById(requestId);
+    public ItemRequestDtoForGetList getItemRequestByRequestId(int requestId) { // любой пользователь может получить itemRequest по id
+        return itemRequestService.itemRequestDtoForGetListById(requestId);
     }
 }

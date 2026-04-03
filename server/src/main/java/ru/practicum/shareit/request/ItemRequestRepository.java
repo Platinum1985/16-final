@@ -14,6 +14,7 @@ public interface ItemRequestRepository extends JpaRepository<ItemRequest, Intege
 
     @EntityGraph(value = "ItemRequest.withItems", type = EntityGraph.EntityGraphType.LOAD)
     Optional<ItemRequest> findById(int id);
+
     @EntityGraph(value = "ItemRequest.withItems", type = EntityGraph.EntityGraphType.LOAD)
     List<ItemRequest> findAllByRequestorIdOrderByCreatedDesc(int requestorId);
 }

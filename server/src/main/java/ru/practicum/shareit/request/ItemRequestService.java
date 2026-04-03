@@ -58,7 +58,7 @@ public class ItemRequestService {
         return itemRequestDtos;
     }
 
-    public ItemRequestDtoForGetList ItemRequestDtoForGetListById(int requestId) { // возвращаем запрос по id
+    public ItemRequestDtoForGetList itemRequestDtoForGetListById(int requestId) { // возвращаем запрос по id
         ItemRequest itemRequest = itemRequestRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Запрос с таким id не найден"));
         List<ItemDtoForItemRequestList> itemsDto = itemRequest.getItems().stream()
                 .map(item -> new ItemDtoForItemRequestList(item.getId(), item.getName(), item.getOwner().getId()))
