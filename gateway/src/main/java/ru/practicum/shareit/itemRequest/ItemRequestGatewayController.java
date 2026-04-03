@@ -27,21 +27,21 @@ public class ItemRequestGatewayController {
     @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
     public ResponseEntity<Object> createItemRequest(
             @RequestBody ItemRequestDto itemRequestDto,
-            @RequestHeader("X-Sharer-User-Id") Long userId) {
+            @RequestHeader("X-Sharer-User-Id") Integer userId) {
 
         return itemRequestClient.createItemRequest(itemRequestDto, userId);
     }
 
     @GetMapping
     public ResponseEntity<List<ItemRequestDtoForGetList>> getAllItemRequests(
-            @RequestHeader("X-Sharer-User-Id") Long userId) {
+            @RequestHeader("X-Sharer-User-Id") Integer userId) {
 
         return itemRequestClient.getAllItemRequests(userId);
     }
 
     @GetMapping("/{requestId}")
     public ResponseEntity<ItemRequestDtoForGetList> getItemRequestByRequestId(
-            @RequestHeader("X-Sharer-User-Id") Long userId,
+            @RequestHeader("X-Sharer-User-Id") Integer userId,
             @PathVariable int requestId) {
 
         return itemRequestClient.getItemRequestByRequestId(userId, requestId);
