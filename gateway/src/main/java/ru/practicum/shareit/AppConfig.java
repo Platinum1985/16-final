@@ -1,5 +1,6 @@
 package ru.practicum.shareit;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -7,8 +8,8 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class AppConfig {
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
         /*Да, верно — Spring Boot не внедряет RestTemplate автоматически «из коробки».
 Хотя Spring Boot предоставляет много удобных автоконфигураций (например, для HttpClient, WebClient), бин RestTemplate по умолчанию не создаётся автоматически.
 Почему так?
