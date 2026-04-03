@@ -21,19 +21,20 @@ public class UserClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> getUser(Long userId) {
+    public ResponseEntity<Object> getUser(Integer userId) {
         return get("/" + userId, userId);
     }
 
+    // Исправление: используем метод post с одним аргументом path и body
     public ResponseEntity<Object> createUser(UserDto userDto) {
-        return post("", null, userDto);
+        return post("", userDto);
     }
 
-    public ResponseEntity<Object> updateUser(Long userId, UserDto userDto) {
+    public ResponseEntity<Object> updateUser(Integer userId, UserDto userDto) {
         return patch("/" + userId, userId, userDto);
     }
 
-    public ResponseEntity<Object> deleteUser(Long userId) {
+    public ResponseEntity<Object> deleteUser(Integer userId) {
         return delete("/" + userId, userId);
     }
 }

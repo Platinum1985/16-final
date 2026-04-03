@@ -32,7 +32,7 @@ public class UserController {
      * Получение информации о пользователе по ID
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUser(@PathVariable Long id) {
+    public ResponseEntity<Object> getUser(@PathVariable Integer id) {
         log.info("Getting user with ID: {}", id);
         return userClient.getUser(id); // исправлено: теперь передаём сформированный путь
     }
@@ -41,7 +41,7 @@ public class UserController {
      * Обновление данных пользователя
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+    public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) {
         log.info("Updating user with ID {} with data: {}", id, userDto);
         return userClient.updateUser(id, userDto); // исправлено: теперь передаём сформированный путь
     }
@@ -50,7 +50,7 @@ public class UserController {
      * Удаление пользователя по ID
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteUser(@PathVariable Integer id) {
         log.info("Deleting user with ID: {}", id);
         return userClient.deleteUser(id); // исправлено: теперь передаём сформированный путь
     }

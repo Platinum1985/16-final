@@ -21,11 +21,11 @@ public class ItemRequestClient extends BaseClient {
         this.objectMapper = objectMapper;
     }
 
-    public ResponseEntity<Object> createItemRequest(ItemRequestDto itemRequestDto, Long userId) {
+    public ResponseEntity<Object> createItemRequest(ItemRequestDto itemRequestDto, Integer userId) {
         return post("/requests", userId, itemRequestDto);
     }
 
-    public ResponseEntity<List<ItemRequestDtoForGetList>> getAllItemRequests(Long userId) {
+    public ResponseEntity<List<ItemRequestDtoForGetList>> getAllItemRequests(Integer userId) {
         ResponseEntity<Object> response = get("/requests", userId);
 
         if (!response.hasBody()) {
@@ -49,7 +49,7 @@ public class ItemRequestClient extends BaseClient {
         }
     }
 
-    public ResponseEntity<ItemRequestDtoForGetList> getItemRequestByRequestId(Long userId, int requestId) {
+    public ResponseEntity<ItemRequestDtoForGetList> getItemRequestByRequestId(Integer userId, int requestId) {
         String path = String.format("/requests/%d", requestId);
         ResponseEntity<Object> response = get(path, userId);
 
