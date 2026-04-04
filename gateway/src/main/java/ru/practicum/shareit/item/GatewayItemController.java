@@ -27,7 +27,7 @@ public class GatewayItemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createItem(@RequestBody ItemDto itemDto, @RequestHeader("X-Sharer-User-Id") int ownerId) {
-        return baseClient.postItem("/items", itemDto);
+        return baseClient.postItem("", itemDto); // убрал "/items"
     }
 
     // Получение элемента по ID
