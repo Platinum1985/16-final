@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/gateway/items")
+@RequestMapping("/items")
 public class GatewayItemController {
     private final ItemClient baseClient;
 
