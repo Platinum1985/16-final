@@ -1,5 +1,6 @@
 package ru.practicum.shareit.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class ItemRequest {
     private LocalDateTime created = LocalDateTime.now();
 
     @OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Item> items;
 
     public ItemRequest(String description, User requestor) {
