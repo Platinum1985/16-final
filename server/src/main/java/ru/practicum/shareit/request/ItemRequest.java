@@ -42,6 +42,6 @@ public class ItemRequest {
     public ItemRequest(String description, User requestor) {
         this.description = description;
         this.requestor = requestor;
-        created=LocalDateTime.now();
+        created = LocalDateTime.now();
     }
 }
