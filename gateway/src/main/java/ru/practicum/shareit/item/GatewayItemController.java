@@ -27,20 +27,20 @@ public class GatewayItemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createItem(@RequestBody ItemDto itemDto, @RequestHeader("X-Sharer-User-Id") int ownerId) {
-        return baseClient.postItem("", itemDto); // убрал "/items"
+        return baseClient.postItem("", itemDto, ownerId);
     }
 
     // Получение элемента по ID
     @GetMapping("/{itemId}")
     public ResponseEntity<Object> getItemByOwnerId(@PathVariable int itemId, @RequestHeader("X-Sharer-User-Id") int ownerId) {
-        return baseClient.getItem("/items/" + itemId);
+        return baseClient.getItem("/items/" + itemId, ownerId);
     }
 
     // Добавление комментария к элементу
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<Object> addComment(@PathVariable int itemId, @RequestBody CommentRequest commentRequest,
                                              @RequestHeader("X-Sharer-User-Id") int authorId) {
-        return baseClient.createComment("/items/" + itemId + "/comment", commentRequest);
+        return baseClient.createComment("/items/" + itemId + "/comment", commentRequest, authorId);
     }
 
     // Обновление элемента
@@ -48,20 +48,19 @@ public class GatewayItemController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> updateItem(@PathVariable int itemId, @RequestBody ItemDto itemDto,
                                              @RequestHeader("X-Sharer-User-Id") int ownerId) {
-        return baseClient.patchItem("/items/" + itemId, itemDto);
+        return baseClient.patchItem("/items/" + itemId, itemDto, ownerId);
     }
 
     // Получение всех элементов для владельца
     @GetMapping
     public ResponseEntity<Object> getAllItemsForOwner(@RequestHeader("X-Sharer-User-Id") int ownerId) {
-        return baseClient.getItem("/items");
+        return baseClient.getItem("/items", ownerId);
     }
 
     // Поиск элементов
     @GetMapping("/search")
     public ResponseEntity<Object> searchItems(@RequestParam("text") String text) {
-        Map<String, Object> parameters = Map.of("text", text);
-        return baseClient.get("/search", null, parameters);
+        return baseClient.searchItems(text);
     }
 
     @ExceptionHandler(NotFoundException.class)

@@ -22,7 +22,7 @@ public class ItemRequestClient extends BaseClient {
     }
 
     public ResponseEntity<Object> createItemRequest(ItemRequestDto itemRequestDto, Integer userId) {
-        return post("/requests", userId, itemRequestDto);
+        return post("/requests", itemRequestDto, userId);
     }
 
     public ResponseEntity<List<ItemRequestDtoForGetList>> getAllItemRequests(Integer userId) {
