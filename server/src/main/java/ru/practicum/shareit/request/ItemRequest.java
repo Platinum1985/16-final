@@ -33,12 +33,15 @@ public class ItemRequest {
     private User requestor;
 
     @Column(name = "created")
-    private LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime created;
 
     @OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Item> items;
 
     public ItemRequest(String description, User requestor) {
+        this.description = description;
+        this.requestor = requestor;
+        created=LocalDateTime.now();
     }
 }
