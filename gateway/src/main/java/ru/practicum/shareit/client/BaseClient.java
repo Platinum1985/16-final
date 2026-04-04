@@ -23,6 +23,10 @@ public class BaseClient {
         return makeAndSendRequest(HttpMethod.GET, path, userId, null, null);
     }
 
+    protected ResponseEntity<Object> get(String path, Integer userId, Map<String, Object> map) {
+        return makeAndSendRequest(HttpMethod.GET, path, userId, map, null);
+    }
+
     protected <T> ResponseEntity<Object> post(String path, T body, Integer userId) {
         return makeAndSendRequest(HttpMethod.POST, path, userId, null, body);
     }
@@ -70,5 +74,9 @@ public class BaseClient {
         }
 
         return responseBuilder.build();
+    }
+
+    protected ResponseEntity<Object> delete(String path, Integer userId) {
+        return makeAndSendRequest(HttpMethod.DELETE, path, userId, null, null);
     }
 }

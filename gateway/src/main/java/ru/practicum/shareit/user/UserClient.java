@@ -27,11 +27,11 @@ public class UserClient extends BaseClient {
 
     // Исправление: используем метод post с одним аргументом path и body
     public ResponseEntity<Object> createUser(UserDto userDto) {
-        return post("", userDto);
+        return post("", userDto, 0);
     }
 
     public ResponseEntity<Object> updateUser(Integer userId, UserDto userDto) {
-        return patch("/" + userId, userId, userDto);
+        return patch("/" + userId, userDto, userId);
     }
 
     public ResponseEntity<Object> deleteUser(Integer userId) {
