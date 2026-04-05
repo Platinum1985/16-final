@@ -9,7 +9,6 @@ import ru.practicum.shareit.exceptions.DuplicateEmailException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ValidationException;
 
-import java.util.List;
 import java.util.Map;
 
 @Slf4j

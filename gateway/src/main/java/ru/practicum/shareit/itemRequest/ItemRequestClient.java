@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.shareit.client.BaseClient;
 
-import java.util.List;
-
 
 @Service
 public class ItemRequestClient extends BaseClient {
