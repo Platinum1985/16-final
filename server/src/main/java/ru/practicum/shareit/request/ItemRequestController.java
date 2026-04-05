@@ -1,5 +1,6 @@
 package ru.practicum.shareit.request;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
@@ -7,6 +8,7 @@ import ru.practicum.shareit.request.dto.ItemRequestDtoForGetList;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(path = "/requests")
 public class ItemRequestController {
@@ -18,12 +20,13 @@ public class ItemRequestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ItemRequest createItemRequest(@RequestBody ItemRequestDto itemRequestDto, @RequestHeader int requestorId) {
+    public ItemRequest createItemRequest(@RequestBody ItemRequestDto itemRequestDto, @RequestHeader("X-Sharer-User-Id") int requestorId) {
         return itemRequestService.addItemRequest(itemRequestDto, requestorId);
     }
 
     @GetMapping
-    public List<ItemRequestDtoForGetList> getAllItemRequests(@RequestHeader int requestorId) { // получение всех своих запросов на вещи
+    public List<ItemRequestDtoForGetList> getAllItemRequests(@RequestHeader("X-Sharer-User-Id") int requestorId) { // получение всех своих запросов на вещи
+        log.info("RequestorId = {}", requestorId);
         return itemRequestService.getAll(requestorId);
     }
 
