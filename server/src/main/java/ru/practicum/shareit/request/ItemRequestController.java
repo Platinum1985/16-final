@@ -25,7 +25,7 @@ public class ItemRequestController {
     }
 
     @GetMapping
-    public List<ItemRequestDtoForGetList> getAllItemRequests(@RequestHeader("X-Sharer-User-Id") int requestorId) { // получение всех своих запросов на вещи
+    public List<ItemRequestDtoForGetList> getAllItemRequests(@RequestHeader("X-Sharer-User-Id") Integer requestorId) { // получение всех своих запросов на вещи
         log.info("RequestorId = {}", requestorId);
         return itemRequestService.getAll(requestorId);
     }
@@ -36,7 +36,7 @@ public class ItemRequestController {
     }
 
     @GetMapping("/{requestId}")
-    public ItemRequestDtoForGetList getItemRequestByRequestId(int requestId) { // любой пользователь может получить itemRequest по id
+    public ItemRequestDtoForGetList getItemRequestByRequestId(@PathVariable Integer requestId) { // любой пользователь может получить itemRequest по id
         return itemRequestService.itemRequestDtoForGetListById(requestId);
     }
 }

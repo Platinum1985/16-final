@@ -41,7 +41,7 @@ public class ItemRequestGatewayController {
     @GetMapping("/{requestId}")
     public ResponseEntity<Object> getItemRequestByRequestId(
             @RequestHeader("X-Sharer-User-Id") Integer userId,
-            @PathVariable int requestId) {
+            @PathVariable Integer requestId) {
 
         return itemRequestClient.getItemRequestByRequestId(userId, requestId);
     }

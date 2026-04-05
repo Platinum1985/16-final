@@ -37,7 +37,7 @@ public class ItemRequestClient extends BaseClient {
     }
 
     // Получение запроса по ID
-    public ResponseEntity<Object> getItemRequestByRequestId(Integer userId, int requestId) {
+    public ResponseEntity<Object> getItemRequestByRequestId(Integer userId, Integer requestId) {
         return get(String.format("/%d", requestId), userId);
     }
 }
