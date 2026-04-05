@@ -33,7 +33,7 @@ public class Item {
     @JoinColumn(name = "ownerId")
     private User owner; //— владелец вещи;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER) //
     @JoinColumn(name = "itemRequestId")
     private ItemRequest request; //— если вещь была создана по запросу другого пол
 
