@@ -35,7 +35,7 @@ public class ItemRequest {
     @Column(name = "created")
     private LocalDateTime created;
 
-    @OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Item> items;
 
