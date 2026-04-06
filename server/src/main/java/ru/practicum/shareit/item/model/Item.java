@@ -60,7 +60,7 @@ public class Item {
         this.name = name;
         this.description = description;
         this.available = available;
-        this.owner=owner;
+        this.owner = owner;
         this.request = request;
     }
 
