@@ -38,6 +38,12 @@ public class ItemRequestGatewayController {
         return itemRequestClient.getAllItemRequests(userId);
     }
 
+    @GetMapping("/all") // добавляем этот метод!
+    public ResponseEntity<Object> getAllOtherItemRequests(
+            @RequestHeader("X-Sharer-User-Id") Integer userId) {
+        return itemRequestClient.getAllOtherItemRequests(userId);
+    }
+
     @GetMapping("/{requestId}")
     public ResponseEntity<Object> getItemRequestByRequestId(
             @RequestHeader("X-Sharer-User-Id") Integer userId,

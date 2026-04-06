@@ -36,6 +36,10 @@ public class ItemRequestClient extends BaseClient {
         return get("/", userId);
     }
 
+    public ResponseEntity<Object> getAllOtherItemRequests(Integer userId) {
+        return get("/all", userId); // обращаемся к эндпоинту /all сервиса
+    }
+
     // Получение запроса по ID
     public ResponseEntity<Object> getItemRequestByRequestId(Integer userId, Integer requestId) {
         return get(String.format("/%d", requestId), userId);
