@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class ItemService {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
 
+    @Transactional
     public ItemForOwnerGetDto getItemByOwner(int itemId, int ownerId) {
         User owner = userRepository.findById(ownerId).orElseThrow(() -> new DataBaseException("Нет такого owner"));
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Item не найден"));
@@ -109,7 +111,7 @@ public class ItemService {
         if (!validationItemDto(itemDto)) {
             throw new ValidationException("Некорректно заполнены поля itemDto");
         }
-        Item item = ItemDtoMapper.toItem(itemDto, itemRequestService);
+        Item item = ItemDtoMapper.toItem(itemDto, itemRequestService, userService);
         log.info("item = {} сервис перед сохранением", item);
         return itemRepository.save(item);
     }

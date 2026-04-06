@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.request.ItemRequestService;
+import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.UserService;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -34,14 +36,16 @@ public final class ItemDtoMapper {
         );
     }
 
-    public static Item toItem(ItemDto itemDto, ItemRequestService itemRequestService) {
-        ItemRequest request = (itemDto.getRequest() != 0)
+    public static Item toItem(ItemDto itemDto, ItemRequestService itemRequestService, UserService userService) {
+        ItemRequest request = (itemDto.getRequest() != null)
                 ? itemRequestService.getItemRequestById(itemDto.getRequest())
                 : null;
+        User owner = userService.getUserById(itemDto.getOwner());
         return new Item(
                 itemDto.getName(),
                 itemDto.getDescription(),
                 itemDto.getAvailable(),
+                owner,
                 request
         );
     }
