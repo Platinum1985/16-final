@@ -4,6 +4,7 @@ import lombok.Data;
 import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,7 +13,7 @@ public class ItemRequestDtoForGetList {
     private String description;
     private User requestor;
     private LocalDateTime created;
-    private List<ItemDtoForItemRequestList> items;
+    private List<ItemDtoForItemRequestList> items = new ArrayList<>();
 
     public ItemRequestDtoForGetList(int id, String description, User requestor, LocalDateTime created, List<ItemDtoForItemRequestList> items) {
         this.id = id;
