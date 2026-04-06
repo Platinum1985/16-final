@@ -112,7 +112,7 @@ public class ItemService {
         }
         Item item = ItemDtoMapper.toItem(itemDto);
         log.info("item = {} сервис перед IF", item);
-        if (itemDto.getRequest() != 0) {
+        if (itemDto.getRequest() != null) {
             item.setRequest(itemRequestService.getItemRequestById(itemDto.getRequest()));
             log.info("строка 29 сервис");
         }
