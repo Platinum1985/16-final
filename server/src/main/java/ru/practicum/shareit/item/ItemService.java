@@ -105,20 +105,12 @@ public class ItemService {
 
     }
 
-
     public Item addItem(ItemDto itemDto) {
         if (!validationItemDto(itemDto)) {
             throw new ValidationException("Некорректно заполнены поля itemDto");
         }
-        Item item = ItemDtoMapper.toItem(itemDto);
-        log.info("item = {} сервис перед IF", item);
-        if (itemDto.getRequest() != null) {
-            item.setRequest(itemRequestService.getItemRequestById(itemDto.getRequest()));
-            log.info("строка 29 сервис");
-        }
-        User owner = userService.getUserById(itemDto.getOwner());
-        item.setOwner(owner);
-        log.info("item = {} сервис после IF", item);
+        Item item = ItemDtoMapper.toItem(itemDto, itemRequestService);
+        log.info("item = {} сервис перед сохранением", item);
         return itemRepository.save(item);
     }
 

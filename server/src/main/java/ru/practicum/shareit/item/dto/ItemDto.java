@@ -9,7 +9,7 @@ public class ItemDto {
     private String description; //— развёрнутое описание;
     private Boolean available; // — статус о том, доступна или нет вещь для аренды;
     private int owner; //— владелец вещи;
-    private Integer request; //— если вещь была создана по запросу другого пол
+    private int request; //— если вещь была создана по запросу другого пол
 
     public ItemDto(int id, String name, String description, Boolean available, int owner, int request) {
         this.id = id;

@@ -54,6 +54,9 @@ public class Item {
     public Item() {
     }
 
+    public Item(String name, String description, Boolean available, ItemRequest request) {
+    }
+
     @Override
     public String toString() {
         return "Item{" +
