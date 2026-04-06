@@ -74,6 +74,7 @@ public class ItemRequestService {
     public ItemRequest getItemRequestById(int requestId) { // ++ этот метод для получения ItemRequest в методе по добавлению Item
         return itemRequestRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Не найден"));
     }
+
     public List<ItemRequestDtoForGetList> getAllOtherRequests(int currentUserId) { // ++ возвращает все запросы кроме самих запросов пользователя
         Iterable<ItemRequest> itemRequests = itemRequestRepository.findAllByRequestorIdNotOrderByCreatedDesc(currentUserId);
 
@@ -95,6 +96,7 @@ public class ItemRequestService {
         }
         return itemRequestDtos;
     }
+
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleNoFoundIdException(NotFoundException e) {
