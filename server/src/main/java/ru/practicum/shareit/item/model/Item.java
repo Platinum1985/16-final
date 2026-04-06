@@ -55,6 +55,10 @@ public class Item {
     }
 
     public Item(String name, String description, Boolean available, ItemRequest request) {
+        this.name = name;
+        this.description = description;
+        this.available = available;
+        this.request = request;
     }
 
     @Override
