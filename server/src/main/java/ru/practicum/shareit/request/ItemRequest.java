@@ -36,6 +36,7 @@ public class ItemRequest {
     private LocalDateTime created;
 
     @OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Item> items;
 
     public ItemRequest(String description, User requestor, LocalDateTime created) {

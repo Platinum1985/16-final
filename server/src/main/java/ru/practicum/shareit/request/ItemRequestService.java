@@ -35,19 +35,16 @@ public class ItemRequestService {
         return itemRequestRepository.save(ItemRequestMapper.toItemRequest(itemRequestDto, reqUser));
     }
 
-    public List<ItemRequestDtoForGetList> getAll(int requestorId) { // находит все запрошенные вещи пользователя по его id
+    public List<ItemRequestDtoForGetList> getAllUserRequests(int requestorId) { // ++ Получение всех СВОИХ запросов
         Iterable<ItemRequest> itemRequests = itemRequestRepository.findAllByRequestorIdOrderByCreatedDesc(requestorId);
 
-        // Преобразуем запросы в DTO с нужными полями
         List<ItemRequestDtoForGetList> itemRequestDtos = new ArrayList<>();
 
-        for (ItemRequest itemRequest : itemRequests) { // исправлено: теперь переменная имеет корректный тип
-            // Создаём список DTO для связанных предметов
+        for (ItemRequest itemRequest : itemRequests) {
             List<ItemDtoForItemRequestList> itemsDto = itemRequest.getItems().stream()
                     .map(item -> new ItemDtoForItemRequestList(item.getId(), item.getName(), item.getOwner().getId()))
                     .collect(Collectors.toList());
 
-            // Формируем итоговый DTO
             ItemRequestDtoForGetList itemRequestDtoForGetList = new ItemRequestDtoForGetList(
                     itemRequest.getId(),
                     itemRequest.getDescription(),
@@ -60,7 +57,7 @@ public class ItemRequestService {
         return itemRequestDtos;
     }
 
-    public ItemRequestDtoForGetList itemRequestDtoForGetListById(int requestId) { // возвращаем запрос по id
+    public ItemRequestDtoForGetList itemRequestDtoForGetListById(int requestId) { // ++ возвращаем запрос по id
         ItemRequest itemRequest = itemRequestRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Запрос с таким id не найден"));
         List<ItemDtoForItemRequestList> itemsDto = itemRequest.getItems().stream()
                 .map(item -> new ItemDtoForItemRequestList(item.getId(), item.getName(), item.getOwner().getId()))
@@ -74,10 +71,30 @@ public class ItemRequestService {
         );
     }
 
-    public ItemRequest getItemRequestById(int requestId) { // этот метод для получения ItemRequest в методе по добавлению Item
+    public ItemRequest getItemRequestById(int requestId) { // ++ этот метод для получения ItemRequest в методе по добавлению Item
         return itemRequestRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Не найден"));
     }
+    public List<ItemRequestDtoForGetList> getAllOtherRequests(int currentUserId) { // ++ возвращает все запросы кроме самих запросов пользователя
+        Iterable<ItemRequest> itemRequests = itemRequestRepository.findAllByRequestorIdNotOrderByCreatedDesc(currentUserId);
 
+        List<ItemRequestDtoForGetList> itemRequestDtos = new ArrayList<>();
+
+        for (ItemRequest itemRequest : itemRequests) {
+            List<ItemDtoForItemRequestList> itemsDto = itemRequest.getItems().stream()
+                    .map(item -> new ItemDtoForItemRequestList(item.getId(), item.getName(), item.getOwner().getId()))
+                    .collect(Collectors.toList());
+
+            ItemRequestDtoForGetList itemRequestDtoForGetList = new ItemRequestDtoForGetList(
+                    itemRequest.getId(),
+                    itemRequest.getDescription(),
+                    itemRequest.getRequestor(),
+                    itemRequest.getCreated(),
+                    itemsDto
+            );
+            itemRequestDtos.add(itemRequestDtoForGetList);
+        }
+        return itemRequestDtos;
+    }
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleNoFoundIdException(NotFoundException e) {
