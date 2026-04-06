@@ -37,7 +37,7 @@ public final class ItemDtoMapper {
     }
 
     public static Item toItem(ItemDto itemDto, ItemRequestService itemRequestService, UserService userService) {
-        ItemRequest request = (itemDto.getRequest() != null)
+        ItemRequest request = (itemDto.getRequest() != 0)
                 ? itemRequestService.getItemRequestById(itemDto.getRequest())
                 : null;
         User owner = userService.getUserById(itemDto.getOwner());
