@@ -45,4 +45,16 @@ public class BookingClient extends BaseClient {
     public ResponseEntity<Object> getBooking(int userId, Integer bookingId) {
         return get("/" + bookingId, userId);
     }
+
+    public ResponseEntity<Object> updateBookingStatus(int bookingId, boolean approved, int itemOwnerId) {
+        // Формируем тело запроса — передаём только флаг approved
+        Map<String, Object> requestBody = Map.of("approved", approved);
+
+        // Строка пути для PATCH‑запроса: /bookings/{bookingId}
+        String path = "/" + bookingId;
+
+        // Отправляем PATCH‑запрос через метод patch базового класса
+        // Первый параметр — путь, второй — тело запроса, третий — ID пользователя (заголовок)
+        return patch(path, requestBody, itemOwnerId);
+    }
 }
