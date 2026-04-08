@@ -40,7 +40,7 @@ public class GatewayItemController {
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<Object> addComment(@PathVariable int itemId, @RequestBody CommentRequest commentRequest,
                                              @RequestHeader("X-Sharer-User-Id") int authorId) {
-        return baseClient.createComment("/items/" + itemId + "/comment", commentRequest, authorId);
+        return baseClient.createComment("/" + itemId + "/comment", commentRequest, authorId);
     }
 
     // Обновление элемента
