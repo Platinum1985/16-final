@@ -66,9 +66,13 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingId}")
-    public void updateBookingApproval(@PathVariable int bookingId, @RequestParam(value = "approved") boolean approved, @RequestHeader("X-Sharer-User-Id") int itemOwnerId) {
+    public ResponseEntity<Object> updateBookingApproval(
+            @PathVariable int bookingId,
+            @RequestParam(value = "approved") boolean approved,
+            @RequestHeader("X-Sharer-User-Id") int itemOwnerId
+    ) {
         log.info("Updating booking {} with approval status: {}", bookingId, approved);
-        bookingClient.updateBookingStatus(bookingId, approved, itemOwnerId);
+        return bookingClient.updateBookingStatus(bookingId, approved, itemOwnerId);
     }
 
     @ExceptionHandler({Exception.class})
