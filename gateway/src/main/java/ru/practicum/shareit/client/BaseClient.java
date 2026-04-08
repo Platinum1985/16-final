@@ -35,6 +35,10 @@ public class BaseClient {
         return makeAndSendRequest(HttpMethod.PATCH, path, userId, null, body);
     }
 
+    protected ResponseEntity<Object> patch(String path, Map<String, Object> parameters, Integer userId) {
+        return makeAndSendRequest(HttpMethod.PATCH, path, userId, parameters, null);
+    }
+
     private <T> ResponseEntity<Object> makeAndSendRequest(
             HttpMethod method, String path, Integer userId, @Nullable Map<String, Object> parameters, @Nullable T body) {
         HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders(userId));
