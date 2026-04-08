@@ -33,7 +33,7 @@ public class ItemRequestClient extends BaseClient {
 
     // Получение всех запросов пользователя
     public ResponseEntity<Object> getAllItemRequests(Integer userId) {
-        return get("/", userId);
+        return get("", userId); // убрал /
     }
 
     public ResponseEntity<Object> getAllOtherItemRequests(Integer userId) {
