@@ -33,7 +33,7 @@ public class GatewayItemController {
     // Получение элемента по ID
     @GetMapping("/{itemId}")
     public ResponseEntity<Object> getItemByOwnerId(@PathVariable int itemId, @RequestHeader("X-Sharer-User-Id") int ownerId) {
-        return baseClient.getItem("/items/" + itemId, ownerId);
+        return baseClient.getItem("/" + itemId, ownerId);
     }
 
     // Добавление комментария к элементу
@@ -48,13 +48,13 @@ public class GatewayItemController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> updateItem(@PathVariable int itemId, @RequestBody ItemDto itemDto,
                                              @RequestHeader("X-Sharer-User-Id") int ownerId) {
-        return baseClient.patchItem("/items/" + itemId, itemDto, ownerId);
+        return baseClient.patchItem("/" + itemId, itemDto, ownerId);
     }
 
     // Получение всех элементов для владельца
     @GetMapping
     public ResponseEntity<Object> getAllItemsForOwner(@RequestHeader("X-Sharer-User-Id") int ownerId) {
-        return baseClient.getItem("/items", ownerId);
+        return baseClient.getItem("/", ownerId);
     }
 
     // Поиск элементов
