@@ -46,7 +46,7 @@ public class BookingClient extends BaseClient {
         return get("/" + bookingId, userId);
     }
 
-    public ResponseEntity<Object> updateBookingStatus(int bookingId, String approved, int itemOwnerId) {
+    public ResponseEntity<Object> updateBookingStatus(int bookingId, boolean approved, int itemOwnerId) {
         // Формируем query‑параметры
         Map<String, Object> parameters = Map.of(
                 "approved", approved
