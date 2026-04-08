@@ -53,7 +53,7 @@ public class BookingClient extends BaseClient {
         );
 
         // Строка пути — только ID бронирования
-        String path = bookingId + "";
+        String path = "/" + bookingId;
 
         // Отправляем PATCH‑запрос через метод patch базового класса
         return patch(path, parameters, itemOwnerId);
