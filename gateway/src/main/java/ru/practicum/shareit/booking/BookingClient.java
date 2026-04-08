@@ -51,7 +51,7 @@ public class BookingClient extends BaseClient {
         Map<String, Object> requestBody = Map.of("approved", approved);
 
         // Строка пути для PATCH‑запроса: /bookings/{bookingId}
-        String path = bookingId + ""; // или просто String path = String.valueOf(bookingId);
+        String path = "/" + bookingId; // или просто String path = String.valueOf(bookingId);
         return patch(path, requestBody, itemOwnerId);
     }
 }
