@@ -1,5 +1,6 @@
 package ru.practicum.shareit.request;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class ItemRequestService {
     private final ItemRequestRepository itemRequestRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public ItemRequest addItemRequest(ItemRequestDto itemRequestDto, int requestor) {
         log.info("ItemRequestDto in SERVICE = {}  int Requestor = {}", itemRequestDto.toString(), requestor);
         User reqUser = userRepository.findById(requestor).orElseThrow(() -> new DataBaseException("User-Requestor не найден"));
@@ -35,6 +37,7 @@ public class ItemRequestService {
         return itemRequestRepository.save(ItemRequestMapper.toItemRequest(itemRequestDto, reqUser));
     }
 
+    @Transactional
     public List<ItemRequestDtoForGetList> getAllUserRequests(int requestorId) { // ++ Получение всех СВОИХ запросов
         Iterable<ItemRequest> itemRequests = itemRequestRepository.findAllByRequestorIdOrderByCreatedDesc(requestorId);
 
@@ -57,8 +60,10 @@ public class ItemRequestService {
         return itemRequestDtos;
     }
 
+    @Transactional
     public ItemRequestDtoForGetList itemRequestDtoForGetListById(int requestId) { // ++ возвращаем запрос по id
         ItemRequest itemRequest = itemRequestRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Запрос с таким id не найден"));
+        log.info("***********++++++++++++++itemRequest in _____SERVICE_____************** items = {} ****** ", itemRequest.getItems());
         List<ItemDtoForItemRequestList> itemsDto = itemRequest.getItems().stream()
                 .map(item -> new ItemDtoForItemRequestList(item.getId(), item.getName(), item.getOwner().getId()))
                 .toList();
@@ -71,10 +76,12 @@ public class ItemRequestService {
         );
     }
 
+    @Transactional
     public ItemRequest getItemRequestById(int requestId) { // ++ этот метод для получения ItemRequest в методе по добавлению Item
         return itemRequestRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Не найден"));
     }
 
+    @Transactional
     public List<ItemRequestDtoForGetList> getAllOtherRequests(int currentUserId) { // ++ возвращает все запросы кроме самих запросов пользователя
         Iterable<ItemRequest> itemRequests = itemRequestRepository.findAllByRequestorIdNotOrderByCreatedDesc(currentUserId);
 

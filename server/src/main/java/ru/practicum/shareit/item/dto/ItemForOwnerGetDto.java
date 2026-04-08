@@ -6,7 +6,6 @@ import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,7 +16,7 @@ public class ItemForOwnerGetDto {
     private Boolean available; // — статус о том, доступна или нет вещь для аренды;
     private User owner; //— владелец вещи;
     private ItemRequest request; //— если вещь была создана по запросу другого пол
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
     private Booking lastBooking;
     private Booking nextBooking;
 

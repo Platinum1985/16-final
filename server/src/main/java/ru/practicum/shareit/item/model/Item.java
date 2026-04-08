@@ -3,7 +3,6 @@ package ru.practicum.shareit.item.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.lang.Nullable;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.comment.Comment;
 import ru.practicum.shareit.request.ItemRequest;
@@ -34,9 +33,8 @@ public class Item {
     @JoinColumn(name = "ownerId")
     private User owner; //— владелец вещи;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST) //
+    @ManyToOne(fetch = FetchType.EAGER) //
     @JoinColumn(name = "itemRequestId")
-    @Nullable
     private ItemRequest request; //— если вещь была создана по запросу другого пол
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY) // item-название поля модели Booking

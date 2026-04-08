@@ -39,6 +39,13 @@ public class ItemRequest {
     @JsonIgnore
     private List<Item> items;
 
+    public ItemRequest(String description, User requestor, LocalDateTime created, List<Item> items) {
+        this.description = description;
+        this.requestor = requestor;
+        this.created = created;
+        this.items = items;
+    }
+
     public ItemRequest(String description, User requestor, LocalDateTime created) {
         this.description = description;
         this.requestor = requestor;

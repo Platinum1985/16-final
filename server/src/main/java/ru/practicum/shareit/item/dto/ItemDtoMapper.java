@@ -37,10 +37,13 @@ public final class ItemDtoMapper {
     }
 
     public static Item toItem(ItemDto itemDto, ItemRequestService itemRequestService, UserService userService) {
-        ItemRequest request = (itemDto.getRequest() != 0)
-                ? itemRequestService.getItemRequestById(itemDto.getRequest())
+       log.info("------------------------reques in mapper toItem = ---------{}------", itemDto.getRequestId());
+        ItemRequest request = (itemDto.getRequestId() > 0)
+                ? itemRequestService.getItemRequestById(itemDto.getRequestId())
                 : null;
+        log.info("---------------reques in mapper toItem = ---------{}------", request);
         User owner = userService.getUserById(itemDto.getOwner());
+        log.info("---------------owner in mapper toItem = ---------{}------", owner.toString());
         return new Item(
                 itemDto.getName(),
                 itemDto.getDescription(),
