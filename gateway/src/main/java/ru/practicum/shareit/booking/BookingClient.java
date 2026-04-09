@@ -49,7 +49,7 @@ public class BookingClient extends BaseClient {
     public ResponseEntity<Object> updateBookingStatus(int bookingId, String approved, int itemOwnerId) {
 
         // Формируем query‑параметры
-        Map<String, Object> parameters = Map.of(
+        Map<String, String> parameters = Map.of(
                 "approved", approved
         );
 
