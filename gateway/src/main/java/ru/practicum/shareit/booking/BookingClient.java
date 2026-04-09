@@ -49,12 +49,12 @@ public class BookingClient extends BaseClient {
     public ResponseEntity<Object> updateBookingStatus(int bookingId, String approved, int itemOwnerId) {
 
         // Формируем query‑параметры
-        Map<String, String> parameters = Map.of(
+        Map<String, Object> parameters = Map.of(
                 "approved", approved
         );
 
         // Строка пути — только ID бронирования
-        String path = "/" + bookingId;
+        String path = "/" + bookingId+"?";
 
         // Отправляем PATCH‑запрос без тела, только с параметрами
         return patch(path, parameters, itemOwnerId);
