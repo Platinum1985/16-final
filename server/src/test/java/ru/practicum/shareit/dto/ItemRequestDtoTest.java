@@ -1,4 +1,5 @@
 package ru.practicum.shareit.dto;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

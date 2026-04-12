@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import ru.practicum.shareit.user.UserDto;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
@@ -22,6 +23,7 @@ public class UserDtoTest {
         assertThat(jsonString).contains("Иван");
         assertThat(jsonString).contains("ivan@example.com");
     }
+
     @Test
     void testDeserialization() throws Exception {
         String jsonString = "{\"name\":\"Иван\", \"email\":\"ivan@example.com\"}";

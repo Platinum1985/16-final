@@ -18,7 +18,7 @@ public class ItemDtoTest {
 
     @Test
     void testSerialization() throws Exception {
-        ItemDto requestItemDto = new ItemDto(0,"Item Name", "Item Description", true, 1, 0);
+        ItemDto requestItemDto = new ItemDto(0, "Item Name", "Item Description", true, 1, 0);
         String jsonString = objectMapper.writeValueAsString(requestItemDto);
         assertThat(jsonString).contains(
                 requestItemDto.getName(), requestItemDto.getDescription(),
