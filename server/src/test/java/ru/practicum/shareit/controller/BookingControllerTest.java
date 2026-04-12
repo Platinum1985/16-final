@@ -60,8 +60,8 @@ public class BookingControllerTest {
         LocalDateTime end = testBookingDto.getEnd();
 
         // Форматируем даты в строку, включая миллисекунды — это нужно для сравнения с ответом API
-        String startFormatted = start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
-        String endFormatted = end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+        String startFormatted = start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS"));
+        String endFormatted = end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS"));
 
         when(bookingService.addBooking(any(BookingDto.class), eq(1)))
                 .thenReturn(testBooking);
