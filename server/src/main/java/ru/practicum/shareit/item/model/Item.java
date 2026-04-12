@@ -62,6 +62,14 @@ public class Item {
         this.request = request;
     }
 
+    public Item(int i, String itemName, String itemDescription, boolean b, User owner) {
+        this.id = i;
+        this.name = itemName;
+        this.description = itemDescription;
+        this.available = b;
+        this.owner = owner;
+    }
+
     @Override
     public String toString() {
         return "Item{" +

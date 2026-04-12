@@ -10,7 +10,7 @@ public class AppConfig {
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
-        /*Да, верно — Spring Boot не внедряет RestTemplate автоматически «из коробки».
+        /*Spring Boot не внедряет RestTemplate автоматически «из коробки».
 Хотя Spring Boot предоставляет много удобных автоконфигураций (например, для HttpClient, WebClient), бин RestTemplate по умолчанию не создаётся автоматически.
 Почему так?
 RestTemplate считается достаточно низкоуровневым инструментом, и Spring поощряет использование более современных альтернатив (например, WebClient).

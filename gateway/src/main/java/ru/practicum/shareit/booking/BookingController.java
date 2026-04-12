@@ -29,6 +29,7 @@ public class BookingController {
     private final BookingClient bookingClient;
 
     @GetMapping
+    @ResponseBody
     public ResponseEntity<Object> getBookings(@RequestHeader("X-Sharer-User-Id") int userId,
                                               @RequestParam(name = "state", defaultValue = "all") String stateParam,
                                               @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
@@ -40,6 +41,7 @@ public class BookingController {
     }
 
     @PostMapping
+    @ResponseBody
     public ResponseEntity<Object> bookItem(@RequestHeader("X-Sharer-User-Id") int userId,
                                            @RequestBody @Valid BookItemRequestDto requestDto) {
         log.info("Creating booking {}, userId={}", requestDto, userId);
@@ -47,6 +49,7 @@ public class BookingController {
     }
 
     @GetMapping("/{bookingId}")
+    @ResponseBody
     public ResponseEntity<Object> getBooking(@RequestHeader("X-Sharer-User-Id") int userId,
                                              @PathVariable Integer bookingId) {
         log.info("Get booking {}, userId={}", bookingId, userId);
@@ -55,17 +58,20 @@ public class BookingController {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
     public Map<String, String> handleNoFoundIdException(NotFoundException e) {
         return Map.of("error", e.getMessage());
     }
 
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
     public Map<String, String> handleValidationException(ValidationException e) {
         return Map.of("error", e.getMessage());
     }
 
     @PatchMapping("/{bookingId}")
+    @ResponseBody
     public ResponseEntity<Object> updateBookingApproval(
             @PathVariable int bookingId,
             @RequestParam(value = "approved") String approved,
@@ -77,6 +83,7 @@ public class BookingController {
 
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
     public Map<String, String> handleUnexpectedException(Exception e) {
         log.error("Unexpected error occurred", e);
         return Map.of("error", "Internal server error");
@@ -84,6 +91,7 @@ public class BookingController {
 
     @ExceptionHandler(DuplicateEmailException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
     public Map<String, String> handleGeneralException(DuplicateEmailException e) {
         return Map.of("Duplicate email", e.getMessage());
     }
