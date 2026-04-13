@@ -26,7 +26,7 @@ public class BookingService {
         log.info("bookingDto после контроллера = {}", bookingDto);
         User booker = userRepository.findById(bookerId).orElseThrow(() -> new DataBaseException("нет такого пользователя booker"));
         if (!checkItemExists(bookingDto.getItemId())) {
-            throw new NotFoundException("элемент не найден");
+            throw new NotFoundException("Item не найден");
         }
 
         if (!itemRepository.findById(bookingDto.getItemId()).get().getAvailable()) {

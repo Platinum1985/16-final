@@ -9,6 +9,7 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -37,7 +38,7 @@ public class ItemRequest {
 
     @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
     @JsonIgnore
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>(); //изменил для теста
 
     public ItemRequest(String description, User requestor, LocalDateTime created, List<Item> items) {
         this.description = description;
