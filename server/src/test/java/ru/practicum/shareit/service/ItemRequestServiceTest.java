@@ -36,7 +36,7 @@ public class ItemRequestServiceTest {
     // Тест 1: добавление запроса
     @Test
     public void addItemRequest_shouldCreateRequestSuccessfully() {
-        User userSaved1 = new User(0, "user1@example.com", "User1");
+        User userSaved1 = new User(0, "User1", "user1@example.com");
         User user1 = userRepository.save(userSaved1);
         ItemRequestDto itemRequestDto = new ItemRequestDto("Ищу книгу по Java");
 
@@ -50,8 +50,8 @@ public class ItemRequestServiceTest {
     // получение всех запросов пользователя
     @Test
     public void getAllUserRequests_shouldReturnUsersOwnRequests() {
-        User userSaved1 = new User(0, "user1@example.com", "User1");
-        User userSaved2 = new User(0, "user2@example.com", "User2");
+        User userSaved1 = new User(0, "User1", "user1@example.com");
+        User userSaved2 = new User(0, "User2", "user2@example.com");
         User user1 = userRepository.save(userSaved1);
         User user2 = userRepository.save(userSaved2);
 
@@ -70,7 +70,7 @@ public class ItemRequestServiceTest {
 
     @Test
     public void itemRequestDtoForGetListById_shouldReturnRequestById() {
-        User user = userRepository.save(new User(0, "user1@example.com", "User1"));
+        User user = userRepository.save(new User(0, "User1", "user1@example.com"));
         ItemRequest request = itemRequestRepository.save(new ItemRequest("Запрос 1", user, LocalDateTime.now()));
 
         ItemRequestDtoForGetList itemRequestDto = itemRequestService.itemRequestDtoForGetListById(request.getId());
@@ -82,8 +82,8 @@ public class ItemRequestServiceTest {
 
     @Test
     public void getAllOtherRequests_shouldReturnAllRequestsExceptCurrentUser() {
-        User user1 = userRepository.save(new User(0, "user1@example.com", "User1"));
-        User user2 = userRepository.save(new User(0, "user2@example.com", "User2"));
+        User user1 = userRepository.save(new User(0, "User1", "user1@example.com"));
+        User user2 = userRepository.save(new User(0, "User2", "user2@example.com"));
 
         ItemRequest request1 = itemRequestRepository.save(new ItemRequest("Запрос 1", user1, LocalDateTime.now()));
         ItemRequest request2 = itemRequestRepository.save(new ItemRequest("Запрос 2", user2, LocalDateTime.now().minusHours(1)));

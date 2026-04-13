@@ -16,7 +16,7 @@ import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.ItemService;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemDtoMapper;
-//import ru.practicum.shareit.item.dto.ItemForOwnerGetDto;
+import ru.practicum.shareit.item.dto.ItemForOwnerGetDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.ItemRequestService;
 import ru.practicum.shareit.user.User;
@@ -38,17 +38,13 @@ public class ItemServiceTest {
     private final BookingRepository bookingRepository;
     private final UserService userService;
     private final ItemRequestService itemRequestService;
+    private Item item;
+    private User user;
 
     @BeforeEach
     public void setUp() {
-        // Очистка данных перед каждым тестом (опционально)
-    }
-
-    // Тест 1: получение предмета владельца
-   /* @Test
-    public void getItemByOwner_ShouldReturnItemForOwner() {
         // Создаём пользователя
-        User user = userService.createUser(new UserDto("user1", "user1@mail.ru"));
+        user = userService.createUser(new UserDto("user1", "user1@mail.ru"));
 
         // Создаём DTO для предмета
         ItemDto itemDto = new ItemDto(
@@ -62,21 +58,20 @@ public class ItemServiceTest {
 
         // Преобразуем DTO в модель Item и сохраняем в БД
         Item itemSaved = ItemDtoMapper.toItem(itemDto, itemRequestService, userService);
-        Item item = itemRepository.save(itemSaved);
+        item = itemRepository.save(itemSaved);
+    }
 
-        // Получаем предмет для владельца — исправлены параметры метода
-        // Первый параметр — ID владельца (user.getId()), второй — ID предмета (item.getId())
-        ItemForOwnerGetDto result = itemService.getItemByOwner(user.getId(), item.getId());
+    // Тест 1: получение предмета владельца
+    @Test
+    public void getItemByOwner_ShouldReturnItemForOwner() {
+        ItemForOwnerGetDto result = itemService.getItemByOwner(item.getId(), user.getId());
 
-        assertThat(result.getId()).isEqualTo(item.getId());      // ID предмета
         assertThat(result.getName()).isEqualTo("Laptop");       // Название — как в DTO
         assertThat(result.getOwner().getId()).isEqualTo(user.getId());  // ID владельца совпадает
-    } */
+    }
 
     @Test
     public void addItem_ShouldCreateNewItemSuccessfully() {
-        // Создаём пользователя
-        User user = userService.createUser(new UserDto("user1", "user1@mail.ru"));
 
         // Готовим DTO для нового предмета
         ItemDto itemDto = new ItemDto(
@@ -101,8 +96,6 @@ public class ItemServiceTest {
 
     @Test
     public void addItem_ShouldThrowValidationException_WhenItemDtoIsInvalid() {
-        // Создаём пользователя
-        User user = userService.createUser(new UserDto("user1", "user1@mail.ru"));
 
         // Готовим некорректный DTO (нет названия)
         ItemDto itemDto = new ItemDto(
@@ -122,12 +115,10 @@ public class ItemServiceTest {
 
     @Test
     public void patchItem_ShouldUpdateItemSuccessfully() {
-        // Создаём пользователя
-        User user = userService.createUser(new UserDto("user1", "user1@mail.ru"));
         ItemDto itemDto = new ItemDto(0, "Book", "Interesting book", true, user.getId(), 0);
         // Создаём предмет
         Item itemSaved = ItemDtoMapper.toItem(itemDto, itemRequestService, userService);
-        Item item = itemRepository.save(itemSaved);
+        Item item1 = itemRepository.save(itemSaved);
 
         // Готовим DTO с обновлёнными данными
         ItemDto updatedDto = new ItemDto(
