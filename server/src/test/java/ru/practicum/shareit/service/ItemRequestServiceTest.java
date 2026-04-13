@@ -47,7 +47,7 @@ public class ItemRequestServiceTest {
         assertThat(createdRequest.getRequestor().getId()).isEqualTo(user1.getId());
     }
 
-    // Тест 2: получение всех запросов пользователя
+    // получение всех запросов пользователя
     @Test
     public void getAllUserRequests_shouldReturnUsersOwnRequests() {
         User userSaved1 = new User(0, "user1@example.com", "User1");
