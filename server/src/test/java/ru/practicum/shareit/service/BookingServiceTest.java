@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.*;
+import ru.practicum.shareit.exceptions.ValidationException;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
@@ -15,6 +16,7 @@ import ru.practicum.shareit.user.UserRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.jayway.jsonpath.internal.path.PathCompiler.fail;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -173,6 +175,46 @@ public class BookingServiceTest {
         List<Booking> futureBookings = bookingService.getOwnerBookings(owner1.getId(), "FUTURE");
         for (Booking booking : futureBookings) {
             assertThat(booking.getStart()).isAfter(LocalDateTime.now()); // Все бронирования в будущем
+        }
+    }
+
+    @Test
+    public void testAddBookingValidationError() {
+        BookingDto invalidBookingDto = new BookingDto(item1.getId(), LocalDateTime.now().plusDays(3), LocalDateTime.now().plusDays(2)); // Некорректные даты
+
+        try {
+            bookingService.addBooking(invalidBookingDto, booker1.getId());
+            fail("Ожидалось исключение ValidationException");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage()).contains("Некорректно заполнены поля booking");
+        }
+    }
+
+    @Test
+    public void testCheckItemExists() {
+        boolean exists = bookingService.checkItemExists(item1.getId());
+        assertThat(exists).isTrue();
+
+        boolean notExists = bookingService.checkItemExists(-1); // ID несуществующего item'а
+        assertThat(notExists).isFalse();
+    }
+
+    @Test
+    public void testAddBookingForUnavailableItem() {
+        Item unavailableItem = new Item();
+        unavailableItem.setName("Unavailable Item");
+        unavailableItem.setDescription("Unavailable Description");
+        unavailableItem.setAvailable(false);
+        unavailableItem.setOwner(owner1);
+        itemRepository.save(unavailableItem);
+
+        BookingDto bookingDto = new BookingDto(unavailableItem.getId(), LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2));
+
+        try {
+            bookingService.addBooking(bookingDto, booker1.getId());
+            fail("Ожидалось исключение ValidationException");
+        } catch (ValidationException e) {
+            assertThat(e.getMessage()).contains("Item недоступен для аренды");
         }
     }
 }
