@@ -36,14 +36,15 @@ public class ItemRequestServiceTest {
     // Тест 1: добавление запроса
     @Test
     public void addItemRequest_shouldCreateRequestSuccessfully() {
-        int userId = 1;
+        User userSaved1 = new User(0, "user1@example.com", "User1");
+        User user1 = userRepository.save(userSaved1);
         ItemRequestDto itemRequestDto = new ItemRequestDto("Ищу книгу по Java");
 
         // Когда
-        ItemRequest createdRequest = itemRequestService.addItemRequest(itemRequestDto, userId);
+        ItemRequest createdRequest = itemRequestService.addItemRequest(itemRequestDto, user1.getId());
 
         assertThat(createdRequest.getDescription()).isEqualTo("Ищу книгу по Java");
-        assertThat(createdRequest.getRequestor().getId()).isEqualTo(userId);
+        assertThat(createdRequest.getRequestor().getId()).isEqualTo(user1.getId());
     }
 
     // Тест 2: получение всех запросов пользователя
