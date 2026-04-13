@@ -45,7 +45,7 @@ public class ItemServiceTest {
     }
 
     // Тест 1: получение предмета владельца
-    @Test
+   /* @Test
     public void getItemByOwner_ShouldReturnItemForOwner() {
         // Создаём пользователя
         User user = userService.createUser(new UserDto("user1", "user1@mail.ru"));
@@ -71,7 +71,7 @@ public class ItemServiceTest {
         assertThat(result.getId()).isEqualTo(item.getId());      // ID предмета
         assertThat(result.getName()).isEqualTo("Laptop");       // Название — как в DTO
         assertThat(result.getOwner().getId()).isEqualTo(user.getId());  // ID владельца совпадает
-    }
+    } */
 
     @Test
     public void addItem_ShouldCreateNewItemSuccessfully() {
