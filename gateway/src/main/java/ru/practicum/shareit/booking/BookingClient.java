@@ -16,7 +16,7 @@ public class BookingClient extends BaseClient {
 
     @Autowired
     public BookingClient(@Qualifier("bookingRestTemplate") RestTemplate restTemplate) {
-        super(restTemplate); // Передаём уже настроенный RestTemplate
+        super(restTemplate);
     }
 
     public ResponseEntity<Object> getBookings(int userId, BookingState state, Integer from, Integer size) {
