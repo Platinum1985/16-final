@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.*;
+import ru.practicum.shareit.exceptions.BusinessLogicException;
 import ru.practicum.shareit.exceptions.ValidationException;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
@@ -129,7 +130,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testUpdateBookingStatus_Approved() {
+    public void testUpdateBookingStatus_Approved() throws BusinessLogicException {
         // Получаем ID первого бронирования (статус WAITING)
         int bookingId = bookingRepository.findAll().get(0).getId();
 
@@ -141,7 +142,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testUpdateBookingStatus_Rejected() {
+    public void testUpdateBookingStatus_Rejected() throws BusinessLogicException {
         int bookingId = bookingRepository.findAll().get(1).getId(); // Второе бронирование
 
         Booking updatedBooking = bookingService.updateBookingStatus(bookingId, false, owner2.getId());

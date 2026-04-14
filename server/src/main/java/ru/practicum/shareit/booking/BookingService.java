@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exceptions.BusinessLogicException;
 import ru.practicum.shareit.exceptions.DataBaseException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ValidationException;
@@ -43,10 +44,10 @@ public class BookingService {
 
     }
 
-    public Booking updateBookingStatus(int bookingId, boolean approved, int itemOwnerId) {
+    public Booking updateBookingStatus(int bookingId, boolean approved, int itemOwnerId) throws BusinessLogicException {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new DataBaseException("Такого booking нет"));
         if (booking.getItem().getOwner().getId() != itemOwnerId) {
-            throw new DataBaseException("У item другой владелец");
+            throw new BusinessLogicException("У item другой владелец"); // Используем новое проверяемое исключение — это бизнес‑правило.
         }
         if (approved) {
             booking.setStatus(Status.APPROVED);

@@ -13,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ru.practicum.shareit.booking.dto.BookItemRequestDto;
 import ru.practicum.shareit.booking.dto.BookingState;
-import ru.practicum.shareit.exceptions.DuplicateEmailException;
-import ru.practicum.shareit.exceptions.NotFoundException;
-import ru.practicum.shareit.exceptions.ValidationException;
+import ru.practicum.shareit.exceptions.*;
 
 import java.util.Map;
 
@@ -31,12 +29,10 @@ public class BookingController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<Object> getBookings(@RequestHeader("X-Sharer-User-Id") int userId,
-                                              @RequestParam(name = "state", defaultValue = "all") String stateParam,
+                                              @RequestParam(name = "state", defaultValue = "ALL") BookingState state,
                                               @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
                                               @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
-        BookingState state = BookingState.from(stateParam)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown state: " + stateParam));
-        log.info("Get booking with state {}, userId={}, from={}, size={}", stateParam, userId, from, size);
+        log.info("Get booking with state {}, userId={}, from={}, size={}", state, userId, from, size);
         return bookingClient.getBookings(userId, state, from, size);
     }
 
@@ -94,6 +90,18 @@ public class BookingController {
     @ResponseBody
     public Map<String, String> handleGeneralException(DuplicateEmailException e) {
         return Map.of("Duplicate email", e.getMessage());
+    }
+
+    @ExceptionHandler(BusinessLogicException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)  // 403 — «запрещено», подходит для бизнес‑ошибок
+    public Map<String, String> handleBusinessLogicException(BusinessLogicException e) {
+        return Map.of("Не владелец вещи", e.getMessage());
+    }
+
+    @ExceptionHandler(DataBaseException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handleDataBaseException(DataBaseException e) {
+        return Map.of("error", e.getMessage());
     }
 }
 

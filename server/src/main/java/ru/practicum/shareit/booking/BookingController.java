@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.exceptions.BusinessLogicException;
+import ru.practicum.shareit.exceptions.DataBaseException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ValidationException;
 
@@ -25,7 +27,7 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingId}")
-    public Booking updateBookingApproval(@PathVariable int bookingId, @RequestParam(value = "approved") String approved, @RequestHeader("X-Sharer-User-Id") int itemOwnerId) {
+    public Booking updateBookingApproval(@PathVariable int bookingId, @RequestParam(value = "approved") String approved, @RequestHeader("X-Sharer-User-Id") int itemOwnerId) throws BusinessLogicException {
         log.info("Updating booking {} with approval status: {}", bookingId, approved);
         return bookingService.updateBookingStatus(bookingId, approved.equals("true"), itemOwnerId);
     }
@@ -62,6 +64,18 @@ public class BookingController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleGeneralException(Exception e) {
+        return Map.of("error", e.getMessage());
+    }
+
+    @ExceptionHandler(BusinessLogicException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)  // 403 — «запрещено», подходит для бизнес‑ошибок
+    public Map<String, String> handleBusinessLogicException(BusinessLogicException e) {
+        return Map.of("Не владелец вещи", e.getMessage());
+    }
+
+    @ExceptionHandler(DataBaseException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handleDataBaseException(DataBaseException e) {
         return Map.of("error", e.getMessage());
     }
 }
