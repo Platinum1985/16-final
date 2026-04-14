@@ -18,7 +18,7 @@ public class UserService {
     public User createUser(UserDto userDto) {
         User user = UserDtoMapper.toUser(userDto, 0); // второй параметр UserId изначально 0, будет задаваться в UserStorage при добавлении в репозиторий
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new DuplicateEmailException("Такой email уже используется");
+            throw new DuplicateEmailException("Такой email уже используется!");
         }
         log.info("user = {} in service", user);
         return userRepository.save(user);
